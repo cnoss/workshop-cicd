@@ -1,0 +1,79 @@
+name: CI
+
+# Dieser Workflow startet automatisch bei jedem Push und bei jedem Pull Request.
+on:
+  push:
+  pull_request:
+
+jobs:
+  # ===========================================================================
+  # BLOCK 1 — Unit-Tests
+  # Dieser Job deckt Block 1 ab. Er laeuft unabhaengig vom api-tests-Job.
+  # ===========================================================================
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code auschecken
+        uses: actions/checkout@v5
+
+      - name: Node.js einrichten
+        uses: actions/setup-node@v5
+        with:
+          node-version: 20
+
+      - name: Abhaengigkeiten installieren
+        run: npm install
+
+      # TODO (Block 1, Aufgabe 1): Ergaenze hier den Step, der die Unit-Tests startet.
+
+
+  # ===========================================================================
+  # BLOCK 2-4 — API-Tests mit Newman
+  # Dieser Job deckt die Bloecke 2, 3 und 4 ab. Er laeuft unabhaengig vom
+  # unit-tests-Job. Faellt Block 1 rot aus, laeuft dieser Job trotzdem.
+  # ===========================================================================
+  api-tests:
+    runs-on: ubuntu-latest
+
+    # TODO (Block 3, Aufgabe 1, Teil A):
+    # Ergänze in .github/workflows/ci.yml im Job api-tests den env: 
+    # Block, der beide Werte bereitstellt.
+
+
+    # TODO (Block 4, Aufgabe 2):
+    # Ergänze im Job api-tests das Environment staging. 
+    # Pushe und beobachte den Unterschied.
+
+    steps:
+      - name: Code auschecken
+        uses: actions/checkout@v5
+
+      - name: Node.js einrichten
+        uses: actions/setup-node@v5
+        with:
+          node-version: 20
+
+      - name: Abhaengigkeiten installieren
+        run: npm install
+
+      # Dieser Step ist Infrastruktur und muss NICHT veraendert werden.
+      # Er startet die Dummy-API im Hintergrund und wartet, bis /health antwortet.
+      - name: API-Server starten
+        run: |
+          npm start &
+          for i in $(seq 1 30); do
+            curl -sf http://localhost:3000/health && break
+            sleep 1
+          done
+
+      # Optionaler Demo-Step (kein Teil einer Aufgabe): zeigt, dass GitHub den
+      # Wert von API_KEY im Log automatisch mit *** maskiert.
+      - name: API_KEY anzeigen (zur Demo der Maskierung)
+        run: echo "API_KEY ist $API_KEY"
+
+      # TODO (Block 2, Aufgabe 1): Ergaenze hier den Step, der die API-Tests
+      # mit Newman ausfuehrt.
+
+      # TODO (Block 3, Aufgabe 1, Teil B): Passe den Newman-Step so an, 
+      # dass der Key zusätzlich an Newman übergeben wird 
+      # (passe den Newman-Step aus Block 2, Aufgabe 1, Teil B an).

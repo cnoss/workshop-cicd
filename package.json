@@ -1,0 +1,19 @@
+{
+  "name": "workshop-cicd",
+  "version": "1.0.0",
+  "description": "Workshop-Grundlage CI/CD in der modernen Webentwicklung — Express Dummy-API",
+  "main": "api/server.js",
+  "scripts": {
+    "start": "node api/server.js",
+    "test": "jest"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0",
+    "newman": "^6.2.1"
+  }
+}

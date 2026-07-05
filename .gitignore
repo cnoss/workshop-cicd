@@ -1,0 +1,9 @@
+# Node
+node_modules/
+npm-debug.log*
+
+# Lokale Umgebungsvariablen (im Workshop kommen diese aus GitHub Secrets/Variables)
+.env
+
+# Betriebssystem
+.DS_Store

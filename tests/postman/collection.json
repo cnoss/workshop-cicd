@@ -1,0 +1,185 @@
+{
+  "info": {
+    "name": "Workshop CI/CD - API Tests",
+    "description": "API-Tests fuer den CI/CD-Workshop. Laeuft mit Newman gegen die eigene Dummy-API. Loesungen stehen als auskommentierte JS-Kommentare direkt in den jeweiligen Test-Skripten.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GET /health",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('status ist ok', function () {",
+              "    pm.expect(pm.response.json().status).to.eql('ok');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["health"]
+        }
+      }
+    },
+    {
+      "name": "GET /users",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Antwort enthaelt eine users-Liste', function () {",
+              "    pm.expect(pm.response.json().users).to.be.an('array');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/users",
+          "host": ["{{baseUrl}}"],
+          "path": ["users"]
+        }
+      }
+    },
+    {
+      "name": "POST /users",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "// ===========================================================",
+              "// TODO (Block 2, Aufgabe 2): Korrigiere den bewusst eingebauten Fehler",
+              "// ===========================================================",
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Antwort enthaelt den angelegten Namen', function () {",
+              "    pm.expect(pm.response.json().name).to.eql('Newman Testuser');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Newman Testuser\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/users",
+          "host": ["{{baseUrl}}"],
+          "path": ["users"]
+        }
+      }
+    },
+    {
+      "name": "GET /secret-data",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "// ===========================================================",
+              "// HINWEIS: Wird erst in BLOCK 3 benoetigt.",
+              "// Hier musst du in Block 2 NICHTS aktivieren.",
+              "//",
+              "// Solange kein apiKey vorhanden ist (Block 2), werden die",
+              "// Pruefungen absichtlich uebersprungen -> kein Fehlschlag.",
+              "// Sobald in Block 3 das GitHub Secret als apiKey injiziert wird",
+              "// (per --env-var im Workflow), laufen die Pruefungen automatisch.",
+              "// ===========================================================",
+              "const apiKey = pm.environment.get('apiKey');",
+              "",
+              "if (!apiKey) {",
+              "    console.log('secret-data uebersprungen — noch kein API-Key (kommt in Block 3).');",
+              "} else {",
+              "    pm.test('Status code is 200 mit gueltigem API-Key', function () {",
+              "        pm.response.to.have.status(200);",
+              "    });",
+              "    pm.test('Antwort enthaelt \"Access granted\"', function () {",
+              "        pm.expect(pm.response.json().message).to.eql('Access granted');",
+              "    });",
+              "    // In Block 4 zeigt das Environment 'staging' einen anderen env-Wert.",
+              "    // Dieser Log macht den Unterschied im Newman-Output sichtbar:",
+              "    console.log('Aktuelle Umgebung (env):', pm.response.json().env);",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "x-api-key", "value": "{{apiKey}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/secret-data",
+          "host": ["{{baseUrl}}"],
+          "path": ["secret-data"]
+        }
+      }
+    },
+    {
+      "name": "POST /users ohne Namen",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "// ===========================================================",
+              "// TODO (Block 2, Aufgabe 3): Dieser Endpunkt wurde noch nicht",
+              "// getestet. Ergaenze hier einen eigenen Test, der prueft, dass",
+              "// die API ohne 'name' im Body mit 400 antwortet.",
+              "// ===========================================================",
+              ""
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/users",
+          "host": ["{{baseUrl}}"],
+          "path": ["users"]
+        }
+      }
+    }
+  ]
+}
