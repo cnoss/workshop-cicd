@@ -25,7 +25,8 @@ jobs:
         run: npm install
 
       # TODO (Block 1, Aufgabe 1): Ergaenze hier den Step, der die Unit-Tests startet.
-
+      - name: Unit-Tests ausfuehren
+        run: npm test
 
   # ===========================================================================
   # BLOCK 2-4 — API-Tests mit Newman
@@ -39,10 +40,16 @@ jobs:
     # Ergänze in .github/workflows/ci.yml im Job api-tests den env: 
     # Block, der beide Werte bereitstellt.
 
+    env:
+      API_KEY: ${{ secrets.API_KEY }}
+      API_ENV_NAME: ${{ vars.API_ENV_NAME }}
+
 
     # TODO (Block 4, Aufgabe 2):
     # Ergänze im Job api-tests das Environment staging. 
     # Pushe und beobachte den Unterschied.
+    
+    environment: staging
 
     steps:
       - name: Code auschecken
@@ -77,3 +84,6 @@ jobs:
       # TODO (Block 3, Aufgabe 1, Teil B): Passe den Newman-Step so an, 
       # dass der Key zusätzlich an Newman übergeben wird 
       # (passe den Newman-Step aus Block 2, Aufgabe 1, Teil B an).
+
+      - name: API-Tests mit Newman ausfuehren
+        run: npx newman run tests/postman/collection.json -e tests/postman/environment.json --env-var "apiKey=$API_KEY"
