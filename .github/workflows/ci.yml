@@ -38,6 +38,8 @@ jobs:
   api-tests:
     runs-on: ubuntu-latest
 
+    environment: staging
+
     # TODO (Block 3, Aufgabe 1, Teil A):
     # Ergänze in .github/workflows/ci.yml im Job api-tests den env: 
     # Block, der beide Werte bereitstellt.
