@@ -41,6 +41,9 @@ jobs:
     # TODO (Block 3, Aufgabe 1, Teil A):
     # Ergänze in .github/workflows/ci.yml im Job api-tests den env: 
     # Block, der beide Werte bereitstellt.
+    env:
+      API_KEY: ${{secrets.API_KEY}}
+      API_ENV_NAME: ${{variables.API_ENV_NAME}}
 
 
     # TODO (Block 4, Aufgabe 2):
@@ -77,7 +80,7 @@ jobs:
       # TODO (Block 2, Aufgabe 1): Ergaenze hier den Step, der die API-Tests
       # mit Newman ausfuehrt.
       - name: API Test via Newman
-        run: npx newman run tests/postman/collection.json -e tests/postman/environment.json
+        run: npx newman run tests/postman/collection.json -e tests/postman/environment.json --env-var "apiKey=$API_KEY"
 
       # TODO (Block 3, Aufgabe 1, Teil B): Passe den Newman-Step so an, 
       # dass der Key zusätzlich an Newman übergeben wird 
