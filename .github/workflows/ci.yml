@@ -77,7 +77,7 @@ jobs:
       # TODO (Block 2, Aufgabe 1): Ergaenze hier den Step, der die API-Tests
       # mit Newman ausfuehrt.
       - name: API Test via Newman
-        run: npx newman run test/postman/collection.json -e test/postman/environment.json
+        run: npx newman run tests/postman/collection.json -e tests/postman/environment.json
 
       # TODO (Block 3, Aufgabe 1, Teil B): Passe den Newman-Step so an, 
       # dass der Key zusätzlich an Newman übergeben wird 
