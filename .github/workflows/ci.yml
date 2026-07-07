@@ -24,6 +24,9 @@ jobs:
       - name: Abhaengigkeiten installieren
         run: npm install
 
+      - name: Tests starten
+        run: npm run test
+
       # TODO (Block 1, Aufgabe 1): Ergaenze hier den Step, der die Unit-Tests startet.
 
 
