@@ -43,7 +43,7 @@ jobs:
     # Block, der beide Werte bereitstellt.
     env:
       API_KEY: ${{secrets.API_KEY}}
-      API_ENV_NAME: ${{wars.API_ENV_NAME}}
+      API_ENV_NAME: ${{vars.API_ENV_NAME}}
 
 
     # TODO (Block 4, Aufgabe 2):
