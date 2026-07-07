@@ -73,7 +73,7 @@
               "// TODO (Block 2, Aufgabe 2): Korrigiere den bewusst eingebauten Fehler",
               "// ===========================================================",
               "pm.test('Status code is 200', function () {",
-              "    pm.response.to.have.status(200);",
+              "    pm.response.to.have.status(201);",
               "});",
               "",
               "pm.test('Antwort enthaelt den angelegten Namen', function () {",
